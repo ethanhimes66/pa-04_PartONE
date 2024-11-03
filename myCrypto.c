@@ -5,7 +5,7 @@ FILE:   myCrypto.c     SKELETON
 
 Written By: 
      1- James Handlon
-	 2- Ethan Himes
+	   2- Ethan Himes
 Submitted on: 
      Insert the date of Submission here
 	 
@@ -349,21 +349,44 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
 
     //  Check agains any NULL pointers in the arguments
 
-    size_t    LenA    = //  number of bytes in IDa ;
-    size_t    LenB    = //  number of bytes in IDb ;
-    size_t    LenMsg1 = //  number of bytes in the completed MSG1 ;;
+    if (log == NULL || msg1 == NULL || IDa == NULL || IDb == NULL || Na == NULL)
+      exitError("One of new message parameters is null.");
+
+    size_t    LenA    = sizeof(IDa); //  number of bytes in IDa ;
+    size_t    LenB    = sizeof(IDb); //  number of bytes in IDb ;
+    size_t    LenMsg1 = LenA + LenB + sizeof(LenA) + sizeof(LenB) + sizeof(Na); //  number of bytes in the completed MSG1 ;;
     size_t   *lenPtr ; 
     uint8_t  *p ;
 
     // Allocate memory for msg1. MUST always check malloc() did not fail
+    msg1 = (uint8_t**) malloc(LenMsg1);
+    if (msg1 == NULL)
+    {
+      exitError("Memory allocation for new message failed.");
+    }
+
 
     // Fill in Msg1:  Len( IDa )  ||  IDa   ||  Len( IDb )  ||  IDb   ||  Na
     p = *msg1;
     
-    // use the pointer p to traverse through msg1 and fill the successive parts of the msg 
+    // use the pointer p to traverse through msg1 and fill the successive parts of the msg
+    memset(p, LenA, sizeof(LenA));
+    p += sizeof(LenA);
+
+    memset(p, IDa, LenA);
+    p += LenA;
+
+    memset(p, LenB, sizeof(LenB));
+    p += sizeof(LenB);
+
+    memset(p, IDb, LenB);
+    p += LenB;
+
+    memset(p, Na, sizeof(Na));
 
     fprintf( log , "The following new MSG1 ( %u bytes ) has been created by MSG1_new ():\n" , LenMsg1 ) ;
     // BIO_dumpt the completed MSG1 indented 4 spaces to the right
+    BIO_dump_indent( log , msg1, LenMsg1, 4);
     fprintf( log , "\n" ) ;
     
     return LenMsg1 ;
