@@ -4,8 +4,8 @@ My Cryptographic Library
 FILE:   myCrypto.c     SKELETON
 
 Written By: 
-     1- YOU  MUST   WRITE 
-	 2- FULL NAMES  HERE   (or risk losing points )
+     1- James Handlon
+	 2- Ethan Himes
 Submitted on: 
      Insert the date of Submission here
 	 
@@ -63,8 +63,8 @@ int getKeyFromFile( char *keyF , myKey_t *x )
 
 //-----------------------------------------------------------------------------
 // Allocate & Build a new Message #1 from Amal to the KDC 
-// Where Msg1 is:  Len(A)  ||  A  ||  Len(B)  ||  B  ||  Na
-// All Len(*) fields are unsigned integers
+// Where Msg1 is:  Len(IDa)  ||  IDa  ||  Len(IDb)  ||  IDb  ||  Na
+// All Len(*) fields are size_t integers
 // Set *msg1 to point at the newly built message
 // Msg1 is not encrypted
 // Returns the size (in bytes) of Message #1 
@@ -74,10 +74,10 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
 
     //  Check agains any NULL pointers in the arguments
 
-    size_t  LenA    = //  number of bytes in IDa ;
-    size_t  LenB    = //  number of bytes in IDb ;
-    size_t  LenMsg1 = //  number of bytes in the completed MSG1 ;;
-    size_t *lenPtr ; 
+    size_t    LenA    = //  number of bytes in IDa ;
+    size_t    LenB    = //  number of bytes in IDb ;
+    size_t    LenMsg1 = //  number of bytes in the completed MSG1 ;;
+    size_t   *lenPtr ; 
     uint8_t  *p ;
 
     // Allocate memory for msg1. MUST always check malloc() did not fail
@@ -85,9 +85,9 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
     // Fill in Msg1:  Len( IDa )  ||  IDa   ||  Len( IDb )  ||  IDb   ||  Na
     p = *msg1;
     
-	// use the pointer p to traverse through msg1 and fill the successive parts of the msg 
+    // use the pointer p to traverse through msg1 and fill the successive parts of the msg 
 
-    fprintf( log , "The following new MSG1 ( %lu bytes ) has been created by MSG1_new ():\n" , LenMsg1 ) ;
+    fprintf( log , "The following new MSG1 ( %u bytes ) has been created by MSG1_new ():\n" , LenMsg1 ) ;
     // BIO_dumpt the completed MSG1 indented 4 spaces to the right
     fprintf( log , "\n" ) ;
     
