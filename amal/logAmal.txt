@@ -18,9 +18,9 @@ Amal will use these Nonces:  Na  and Na2
          MSG1 New
 ***************************************************
 The following new MSG1 ( 47 bytes ) has been created by MSG1_new ():
-    0000 - a0 68 93 85 dd 58 00 00-3c 00 13 84 dd 58 00 00   .h...X..<....X..
-    0010 - b0 46 93 85 dd 58 00 00-5d 02 13 84 dd 58 00 00   .F...X..]....X..
-    0020 - 6a 02 13 84 dd 58 00 00-00 00 00 00 00 00 00      j....X.........
+    0000 - a0 78 d7 9b e4 60 00 00-3c d0 25 9a e4 60 00 00   .x...`..<.%..`..
+    0010 - b0 56 d7 9b e4 60 00 00-5d d2 25 9a e4 60 00 00   .V...`..].%..`..
+    0020 - 6a d2 25 9a e4 60 00 00-00 00 00 00 00 00 00      j.%..`.........
 
 Amal sent message 1 ( 47 bytes ) to the KDC with:
     IDa ='Amal is Hope'

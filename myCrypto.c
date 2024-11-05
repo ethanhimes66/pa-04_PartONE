@@ -359,6 +359,7 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
     uint8_t  *p ;
 
     // Allocate memory for msg1. MUST always check malloc() did not fail
+    printf("%s\n", IDa);
     *msg1 = (uint8_t*) malloc(LenMsg1);
     if (*msg1 == NULL)
     {
