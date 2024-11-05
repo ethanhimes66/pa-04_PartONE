@@ -9,6 +9,7 @@ Amal has this Master Ka { key , IV }
     0010 - 4d 28 89 5d d0 c8 37 c5-01 5b 79 e3 0d f0 81 fe   M(.]..7..[y.....
 
     0000 - bf 54 5a 8f 76 06 6a 54-a7 dd e6 33 b7 cb 74 f6   .TZ.v.jT...3..t.
+
 Amal will use these Nonces:  Na  and Na2
     0000 - 44 33 22 11                                       D3".
 
@@ -18,15 +19,16 @@ Amal will use these Nonces:  Na  and Na2
          MSG1 New
 ***************************************************
 The following new MSG1 ( 49 bytes ) has been created by MSG1_new ():
-    0000 - 0c 00 00 00 00 00 00 00-41 6d 61 6c 20 69 73 20   ........Amal is 
-    0010 - 48 6f 70 65 0f 00 00 00-00 00 00 00 42 61 73 69   Hope........Basi
-    0020 - 6d 20 69 73 20 53 6d 69-6c 65 79 44 33 22 11 00   m is SmileyD3"..
-    0030 - 00                                                .
+    0000 - 0d 00 00 00 00 00 00 00-41 6d 61 6c 20 69 73 20   ........Amal is 
+    0010 - 48 6f 70 65 00 10 00 00-00 00 00 00 00 42 61 73   Hope.........Bas
+    0020 - 69 6d 20 69 73 20 53 6d-69 6c 65 79 00 44 33 22   im is Smiley.D3"
+    0030 - 11                                                .
 
 Amal sent message 1 ( 49 bytes ) to the KDC with:
     IDa ='Amal is Hope'
     IDb = 'Basim is Smiley'
     Na ( 4 Bytes ) is:
-0000 - 44 33 22 11                                       D3".
+    0000 - 44 33 22 11                                       D3".
+
 
 Amal has terminated normally. Goodbye

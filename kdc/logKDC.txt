@@ -19,7 +19,7 @@ Basim has this Master Kb { key , IV }
 ***************************************************
          MSG1 Receive
 ***************************************************
-MSG1 ( 47 bytes ) has been received on FD 3 by MSG1_receive():
+MSG1 ( 49 bytes ) has been received on FD 3 by MSG1_receive():
 
 KDC received message 1 from Amal with:
     IDa = 'Amal is Hope'

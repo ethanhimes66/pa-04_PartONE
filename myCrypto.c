@@ -435,7 +435,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     }
 
  	// On failure to read ID_A from the pipe
-    if (read(fd, IDa, LenA) == -1)
+    if (read(fd, *IDa, LenA) == -1)
     {
         fprintf( log , "Out of Memory allocating %lu bytes for IDA in MSG1_receive() "
                        "... EXITING\n" , LenA );
@@ -469,7 +469,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     }
 
  	// Now, read IDb ... But on failure to read ID_B from the pipe
-    if (read(fd, IDb, lenB) == -1)
+    if (read(fd, *IDb, lenB) == -1)
     {
         fprintf( log , "Unable to receive all %lu bytes of IDB in MSG1_receive() "
                        "... EXITING\n" , lenB );
