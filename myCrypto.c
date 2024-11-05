@@ -354,7 +354,7 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
 
     size_t    LenA    = sizeof(IDa); //  number of bytes in IDa ;
     size_t    LenB    = sizeof(IDb); //  number of bytes in IDb ;
-    size_t    LenMsg1 = LenA + LenB + sizeof(LenA) + sizeof(LenB) + sizeof(Na); //  number of bytes in the completed MSG1 ;;
+    size_t    LenMsg1 = LenA + LenB + sizeof(LenA) + sizeof(LenB) + NONCELEN; //  number of bytes in the completed MSG1 ;;
     size_t   *lenPtr ; 
     uint8_t  *p ;
 
@@ -370,7 +370,7 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
     p = *msg1;
     
     // use the pointer p to traverse through msg1 and fill the successive parts of the msg
-    memset(p, LenA, sizeof(LenA));
+    memset(msg1[*p], LenA, sizeof(LenA));
     p += sizeof(LenA);
 
     memset(p, IDa, LenA);
@@ -382,7 +382,7 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
     memset(p, IDb, LenB);
     p += LenB;
 
-    memset(p, Na, sizeof(Na));
+    memset(p, Na, NONCELEN);
 
     fprintf( log , "The following new MSG1 ( %u bytes ) has been created by MSG1_new ():\n" , LenMsg1 ) ;
     // BIO_dumpt the completed MSG1 indented 4 spaces to the right
@@ -475,7 +475,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     }
     
     // 5) Read Na   But on failure to read Na from the pipe
-    if (read(Na, fd, sizeof(Na)) == -1)
+    if (read(Na, fd, NONCELEN) == -1)
     {
         fprintf( log , "Unable to receive all %lu bytes of Na "
                        "in MSG1_receive() ... EXITING\n" , NONCELEN );
@@ -484,7 +484,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
         exitError( "Unable to receive all bytes of Na in MSG1_receive()" );
     }
 
-    LenMsg1 += sizeof(Na);
+    LenMsg1 += NONCELEN;
  
     fprintf( log , "MSG1 ( %lu bytes ) has been received"
                    " on FD %d by MSG1_receive():\n" ,  LenMsg1 , fd  ) ;   

@@ -85,20 +85,32 @@ int main ( int argc , char * argv[] )
 	// On failure, print "\nCould not get Amal's Masker key & IV.\n" to both  stderr and the Log file
 	// and exit(-1)
 	// On success, print "Amal has this Master Ka { key , IV }\n" to the Log file
-    
+    if (getKeyFromFile("amal/amalKey.bin", &Ka) == -1)
+    {
+        fprintf( log , "\nCould not get Amal's Masker key & IV.\n");
+        fprintf( stderr , "\nCould not get Amal's Masker key & IV.\n");
+    } else {
+        fprintf( log , "Amal has this Master Ka { %lx , %lx }\n", Ka.key, Ka.iv);
+    }
 
 	// BIO_dump the Key IV indented 4 spaces to the righ
+    BIO_dump_indent( log , Ka.key, sizeof(Ka.key), 4);
     fprintf( log , "\n" );
 	// BIO_dump the IV indented 4 spaces to the righ
-
+    BIO_dump_indent( log , Ka.iv, sizeof(Ka.iv), 4);
 
     // Get Amal's pre-created Nonces: Na and Na2
 	Nonce_t   Na , Na2; 
     fprintf( log , "Amal will use these Nonces:  Na  and Na2\n"  ) ;
 	// Use getNonce4Amal () to get Amal's 1st and second nonces into Na and Na2, respectively
-	// BIO_dump Na indented 4 spaces to the righ
+    getNonce4Amal(1, Na);
+    getNonce4Amal(2, Na2);
+
+	// BIO_dump Na indented 4 spaces to the right
+    BIO_dump_indent( log , Na, NONCELEN, 4);
     fprintf( log , "\n" );
 	// BIO_dump Na2 indented 4 spaces to the righ
+    BIO_dump_indent( log , Na2, NONCELEN, 4);
     fprintf( log , "\n") ; 
 
     fflush( log ) ;
@@ -116,16 +128,18 @@ int main ( int argc , char * argv[] )
     LenMsg1 = MSG1_new( log , &msg1 , IDa , IDb , Na ) ;
     
     // Send MSG1 to KDC via the appropriate pipe
+    write(fd_A2K, msg1, LenMsg1);
 
    fprintf( log , "Amal sent message 1 ( %lu bytes ) to the KDC with:\n    "
                    "IDa ='%s'\n    "
                    "IDb = '%s'\n" , LenMsg1 , IDa , IDb ) ;
     fprintf( log , "    Na ( %lu Bytes ) is:\n" , NONCELEN ) ;
     // BIO_dump the nonce Na
+    BIO_dump( log , Na, NONCELEN);
     fflush( log ) ;
 
     // Deallocate any memory allocated for msg1
-
+    free(msg1);
 
     // PA-04 Part Two
     // will go here
