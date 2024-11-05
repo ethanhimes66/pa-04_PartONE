@@ -99,6 +99,7 @@ int main ( int argc , char * argv[] )
     fprintf( log , "\n" );
 	// BIO_dump_fp the IV indented 4 spaces to the righ
     BIO_dump_indent_fp( log , Ka.iv, INITVECTOR_LEN, 4);
+    fprintf( log , "\n" );
 
     // Get Amal's pre-created Nonces: Na and Na2
 	Nonce_t   Na , Na2; 
@@ -136,11 +137,12 @@ int main ( int argc , char * argv[] )
                    "IDb = '%s'\n" , LenMsg1 , IDa , IDb ) ;
     fprintf( log , "    Na ( %lu Bytes ) is:\n" , NONCELEN ) ;
     // BIO_dump_fp the nonce Na
-    BIO_dump_fp( log , Na, NONCELEN);
+    BIO_dump_indent_fp( log , Na, NONCELEN, 4);
     fflush( log ) ;
 
     // Deallocate any memory allocated for msg1
     free(msg1);
+    fprintf( log , "\n") ;
 
     // PA-04 Part Two
     // will go here

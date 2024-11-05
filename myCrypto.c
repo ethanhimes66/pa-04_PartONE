@@ -352,8 +352,8 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
     if (log == NULL || msg1 == NULL || IDa == NULL || IDb == NULL || Na == NULL)
       exitError("One of new message parameters is null.");
 
-    size_t    LenA    = strlen(IDa); //  number of bytes in IDa ;
-    size_t    LenB    = strlen(IDb); //  number of bytes in IDb ;
+    size_t    LenA    = strlen(IDa) + 1; //  number of bytes in IDa ;
+    size_t    LenB    = strlen(IDb) + 1; //  number of bytes in IDb ;
     size_t    LenMsg1 = LenA + LenB + LENSIZE + LENSIZE + NONCELEN; //  number of bytes in the completed MSG1 ;;
     size_t   *lenPtr ; 
     uint8_t  *p ;
