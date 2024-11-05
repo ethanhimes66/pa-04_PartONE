@@ -89,7 +89,7 @@ int main ( int argc , char * argv[] )
     }
     fprintf( log , "\n" );
 	// BIO_dump the IV indented 4 spaces to the righ
-    BIO_dump_indent( log , Kb.iv, sizeof(Kb.iv), 4);
+    BIO_dump_indent( log , Kb.iv, INITVECTOR_LEN, 4);
     // Get Basim's pre-created Nonces: Nb
 	Nonce_t   Nb;  
 

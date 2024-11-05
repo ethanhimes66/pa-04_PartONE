@@ -89,6 +89,7 @@ int main ( int argc , char * argv[] )
     {
         fprintf( log , "\nCould not get Amal's Masker key & IV.\n");
         fprintf( stderr , "\nCould not get Amal's Masker key & IV.\n");
+        exit(-1);
     } else {
         fprintf( log , "Amal has this Master Ka { %lx , %lx }\n", Ka.key, Ka.iv);
     }
@@ -97,7 +98,7 @@ int main ( int argc , char * argv[] )
     BIO_dump_indent( log , Ka.key, sizeof(Ka.key), 4);
     fprintf( log , "\n" );
 	// BIO_dump the IV indented 4 spaces to the righ
-    BIO_dump_indent( log , Ka.iv, sizeof(Ka.iv), 4);
+    BIO_dump_indent( log , Ka.iv, INITVECTOR_LEN, 4);
 
     // Get Amal's pre-created Nonces: Na and Na2
 	Nonce_t   Na , Na2; 

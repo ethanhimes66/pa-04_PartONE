@@ -33,8 +33,8 @@ int main ( int argc , char * argv[] )
         exit(-1) ;
     }
 
-    fd_A2K    = ....  ;  // Read from Amal   File Descriptor
-    fd_K2A    = ....  ;  // Send to   Amal   File Descriptor
+    fd_A2K    = argv[0]  ;  // Read from Amal   File Descriptor
+    fd_K2A    = argv[1]  ;  // Send to   Amal   File Descriptor
 
     log = fopen("kdc/logKDC.txt" , "w" );
     if( ! log )
@@ -57,9 +57,18 @@ int main ( int argc , char * argv[] )
 	// and exit(-1)
 	// On success, print "Amal has this Master Ka { key , IV }\n" to the Log file
 	// BIO_dump the Key IV indented 4 spaces to the righ
+    if (getKeyFromFile("kdc/amalKey.bin", &Ka) == -1)
+    {
+        fprintf( log , "\nCould not get Amal's Masker key & IV.\n");
+        fprintf( stderr , "\nCould not get Amal's Masker key & IV.\n");
+        exit(-1);
+    } else {
+        fprintf( log , "Amal has this Master Ka { %lx , %lx }\n", Ka.key, Ka.iv);
+        BIO_dump_indent( log , Ka.key, sizeof(Ka.key), 4);
+    }
     fprintf( log , "\n" );
 	// BIO_dump the IV indented 4 spaces to the righ
-
+    BIO_dump_indent( log , Ka.iv, sizeof(Ka.iv), 4);
 
     fflush( log ) ;
     
@@ -71,8 +80,18 @@ int main ( int argc , char * argv[] )
 	// and exit(-1)
 	// On success, print "Basim has this Master Ka { key , IV }\n" to the Log file
 	// BIO_dump the Key IV indented 4 spaces to the righ
+    if (getKeyFromFile("kdc/basimKey.bin", &Kb) == -1)
+    {
+        fprintf( log , "\nCould not get Basim's Masker key & IV.\n");
+        fprintf( stderr , "\nCould not get Basim's Masker key & IV.\n");
+        exit(-1);
+    } else {
+        fprintf( log , "Basim has this Master Ka { %lx , %lx }\n", Kb.key, Kb.iv);
+        BIO_dump_indent( log , Kb.key, sizeof(Kb.key), 4);
+    }
     fprintf( log , "\n" );
-	// BIO_dump the IV indented 4 spaces to the righ
+	// BIO_dump the IV indented 4 spaces to the right
+    BIO_dump_indent( log , Kb.iv, INITVECTOR_LEN, 4);
     fflush( log ) ;
 
     //*************************************
@@ -94,6 +113,7 @@ int main ( int argc , char * argv[] )
 
     fprintf( log , "    Na ( %lu Bytes ) is:\n" , NONCELEN ) ;
      // BIO_dump the nonce Na
+    BIO_dump( log , Na, NONCELEN);
 
     fflush( log ) ;
 
