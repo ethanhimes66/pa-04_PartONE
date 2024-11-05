@@ -400,6 +400,10 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
 {
 
     //  Check agains any NULL pointers in the arguments
+    if (log == NULL || fd == NULL || IDa == NULL || IDb == NULL || Na == NULL)
+    {
+      exitError("One of the message received parameters is null.");
+    }
 
     size_t LenMsg1 = 0, LenA , lenB ;
 	// Throughout this function, don't forget to update LenMsg1 as you receive its components
@@ -407,6 +411,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     // Read in the components of Msg1:  Len(IDa)  ||  IDa  ||  Len(IDb)  ||  IDb  ||  Na
 
     // 1) Read Len(ID_A)  from the pipe ... But on failure to read Len(IDa): 
+    if (read(LenA, fd, sizeof(LenA)) == -1)
     {
         fprintf( log , "Unable to receive all %lu bytes of Len(IDA) "
                        "in MSG1_receive() ... EXITING\n" , LENSIZE );
@@ -415,8 +420,12 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
         exitError( "Unable to receive all bytes LenA in MSG1_receive()" );
     }
 
-    
+    LenMsg1 += LenA;
+
     // 2) Allocate memory for ID_A ... But on failure to allocate memory:
+    IDa = (char**) malloc(LenA);
+
+    if (IDa == NULL)
     {
         fprintf( log , "Out of Memory allocating %u bytes for IDA in MSG1_receive() "
                        "... EXITING\n" , LenA );
@@ -425,6 +434,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     }
 
  	// On failure to read ID_A from the pipe
+    if (read(IDa, fd, LenA) == -1)
     {
         fprintf( log , "Out of Memory allocating %lu bytes for IDA in MSG1_receive() "
                        "... EXITING\n" , LenA );
@@ -433,6 +443,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     }
 
     // 3) Read Len( ID_B )  from the pipe    But on failure to read Len( ID_B ):
+    if (read(lenB, fd, sizeof(lenB)) == -1)
     {
         fprintf( log , "Unable to receive all %lu bytes of Len(IDB) "
                        "in MSG1_receive() ... EXITING\n" , LENSIZE );
@@ -441,7 +452,12 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
         exitError( "Unable to receive all bytes of LenB in MSG1_receive()" );
     }
 
+    LenMsg1 += lenB;
+
     // 4) Allocate memory for ID_B    But on failure to allocate memory:
+    IDb = (char**) malloc(lenB);
+
+    if (IDb == NULL)
     {
         fprintf( log , "Out of Memory allocating %u bytes for IDB in MSG1_receive() "
                        "... EXITING\n" , lenB );
@@ -450,6 +466,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     }
 
  	// Now, read IDb ... But on failure to read ID_B from the pipe
+    if (read(IDb, fd, lenB) == -1)
     {
         fprintf( log , "Unable to receive all %u bytes of IDB in MSG1_receive() "
                        "... EXITING\n" , lenB );
@@ -458,6 +475,7 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
     }
     
     // 5) Read Na   But on failure to read Na from the pipe
+    if (read(Na, fd, sizeof(Na)) == -1)
     {
         fprintf( log , "Unable to receive all %lu bytes of Na "
                        "in MSG1_receive() ... EXITING\n" , NONCELEN );
@@ -465,6 +483,8 @@ void  MSG1_receive( FILE *log , int fd , char **IDa , char **IDb , Nonce_t Na )
         fflush( log ) ;  fclose( log ) ;   
         exitError( "Unable to receive all bytes of Na in MSG1_receive()" );
     }
+
+    LenMsg1 += sizeof(Na);
  
     fprintf( log , "MSG1 ( %lu bytes ) has been received"
                    " on FD %d by MSG1_receive():\n" ,  LenMsg1 , fd  ) ;   

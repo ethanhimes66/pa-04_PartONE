@@ -57,10 +57,10 @@ int main ( int argc , char * argv[] )
                "<getFr. Basim> <sendTo Basim>\n\n" , argv[0]) ;
         exit(-1) ;
     }
-    fd_K2A    = ...... ;  // Read from KDC    File Descriptor
-    fd_A2K    = ...... ;  // Send to   KDC    File Descriptor
-    fd_B2A    = ...... ;  // Read from Basim  File Descriptor
-    fd_A2B    = ...... ;  // Send to   Basim  File Descriptor
+    fd_K2A    = argv[0] ;  // Read from KDC    File Descriptor
+    fd_A2K    = argv[1] ;  // Send to   KDC    File Descriptor
+    fd_B2A    = argv[2] ;  // Read from Basim  File Descriptor
+    fd_A2B    = argv[3] ;  // Send to   Basim  File Descriptor
 
     log = fopen("amal/logAmal.txt" , "w" );
     if( ! log )
@@ -85,6 +85,8 @@ int main ( int argc , char * argv[] )
 	// On failure, print "\nCould not get Amal's Masker key & IV.\n" to both  stderr and the Log file
 	// and exit(-1)
 	// On success, print "Amal has this Master Ka { key , IV }\n" to the Log file
+    
+
 	// BIO_dump the Key IV indented 4 spaces to the righ
     fprintf( log , "\n" );
 	// BIO_dump the IV indented 4 spaces to the righ
