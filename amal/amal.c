@@ -57,10 +57,10 @@ int main ( int argc , char * argv[] )
                "<getFr. Basim> <sendTo Basim>\n\n" , argv[0]) ;
         exit(-1) ;
     }
-    fd_K2A    = argv[0] ;  // Read from KDC    File Descriptor
-    fd_A2K    = argv[1] ;  // Send to   KDC    File Descriptor
-    fd_B2A    = argv[2] ;  // Read from Basim  File Descriptor
-    fd_A2B    = argv[3] ;  // Send to   Basim  File Descriptor
+    fd_K2A    = atoi ( argv[0] ) ;  // Read from KDC    File Descriptor
+    fd_A2K    = atoi ( argv[1] ) ;  // Send to   KDC    File Descriptor
+    fd_B2A    = atoi ( argv[2] ) ;  // Read from Basim  File Descriptor
+    fd_A2B    = atoi ( argv[3] ) ;  // Send to   Basim  File Descriptor
 
     log = fopen("amal/logAmal.txt" , "w" );
     if( ! log )
@@ -91,14 +91,14 @@ int main ( int argc , char * argv[] )
         fprintf( stderr , "\nCould not get Amal's Masker key & IV.\n");
         exit(-1);
     } else {
-        fprintf( log , "Amal has this Master Ka { %lx , %lx }\n", Ka.key, Ka.iv);
+        fprintf( log , "Amal has this Master Ka { %hhn , %hhn }\n", Ka.key, Ka.iv);
     }
 
-	// BIO_dump the Key IV indented 4 spaces to the righ
-    BIO_dump_indent( log , Ka.key, sizeof(Ka.key), 4);
+	// BIO_dump_fp the Key IV indented 4 spaces to the righ
+    BIO_dump_indent_fp( log , Ka.key, sizeof(Ka.key), 4);
     fprintf( log , "\n" );
-	// BIO_dump the IV indented 4 spaces to the righ
-    BIO_dump_indent( log , Ka.iv, INITVECTOR_LEN, 4);
+	// BIO_dump_fp the IV indented 4 spaces to the righ
+    BIO_dump_indent_fp( log , Ka.iv, INITVECTOR_LEN, 4);
 
     // Get Amal's pre-created Nonces: Na and Na2
 	Nonce_t   Na , Na2; 
@@ -107,11 +107,11 @@ int main ( int argc , char * argv[] )
     getNonce4Amal(1, Na);
     getNonce4Amal(2, Na2);
 
-	// BIO_dump Na indented 4 spaces to the right
-    BIO_dump_indent( log , Na, NONCELEN, 4);
+	// BIO_dump_fp Na indented 4 spaces to the right
+    BIO_dump_indent_fp( log , Na, NONCELEN, 4);
     fprintf( log , "\n" );
-	// BIO_dump Na2 indented 4 spaces to the righ
-    BIO_dump_indent( log , Na2, NONCELEN, 4);
+	// BIO_dump_fp Na2 indented 4 spaces to the righ
+    BIO_dump_indent_fp( log , Na2, NONCELEN, 4);
     fprintf( log , "\n") ; 
 
     fflush( log ) ;
@@ -135,8 +135,8 @@ int main ( int argc , char * argv[] )
                    "IDa ='%s'\n    "
                    "IDb = '%s'\n" , LenMsg1 , IDa , IDb ) ;
     fprintf( log , "    Na ( %lu Bytes ) is:\n" , NONCELEN ) ;
-    // BIO_dump the nonce Na
-    BIO_dump( log , Na, NONCELEN);
+    // BIO_dump_fp the nonce Na
+    BIO_dump_fp( log , Na, NONCELEN);
     fflush( log ) ;
 
     // Deallocate any memory allocated for msg1

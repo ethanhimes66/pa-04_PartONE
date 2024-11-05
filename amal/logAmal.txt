@@ -1,0 +1,16 @@
+***************************************************
+Starting Amal
+***************************************************
+
+<readFrom KDC> FD=0 , <sendTo KDC> FD=5 , <readFrom Basim> FD=4 , <sendTo Basim> FD=9
+
+Amal has this Master Ka {  ,  }
+    0000 - 1a 8b d6 a2 ea 9b ec e9-a8 de a6 b4 50 22 31 75   ............P"1u
+    0010 - 4d 28 89 5d d0 c8 37 c5-01 5b 79 e3 0d f0 81 fe   M(.]..7..[y.....
+
+    0000 - 1d 54 5a 8f 76 06 6a 54-a7 dd e6 33 b7 cb 74 f6   .TZ.v.jT...3..t.
+Amal will use these Nonces:  Na  and Na2
+    0000 - 44 33 22 11                                       D3".
+
+    0000 - dd cc bb aa                                       ....
+

@@ -54,8 +54,8 @@ int main ( int argc , char * argv[] )
         exit(-1) ;
     }
 
-    fd_A2B    = argv[0] ;  // Read from Amal   File Descriptor
-    fd_B2A    = argv[1] ;  // Send to   Amal   File Descriptor
+    fd_A2B    = atoi ( argv[0] ) ;  // Read from Amal   File Descriptor
+    fd_B2A    = atoi ( argv[1] ) ;  // Send to   Amal   File Descriptor
 
     log = fopen("basim/logBasim.txt" , "w" );
     if( ! log )
@@ -77,27 +77,27 @@ int main ( int argc , char * argv[] )
 	// On failure, print "\nCould not get Basim's Masker key & IV.\n" to both  stderr and the Log file
 	// and exit(-1)
 	// On success, print "Basim has this Master Ka { key , IV }\n" to the Log file
-	// BIO_dump the Key IV indented 4 spaces to the righ
+	// BIO_dump_fp the Key IV indented 4 spaces to the righ
     if (getKeyFromFile("basim/basimKey.bin", &Kb) == -1)
     {
         fprintf( log , "\nCould not get Basim's Masker key & IV.\n");
         fprintf( stderr , "\nCould not get Basim's Masker key & IV.\n");
         exit(-1);
     } else {
-        fprintf( log , "Basim has this Master Ka { %lx , %lx }\n", Kb.key, Kb.iv);
-        BIO_dump_indent( log , Kb.key, sizeof(Kb.key), 4);
+        fprintf( log , "Basim has this Master Ka { %hhn , %hhn }\n", Kb.key, Kb.iv);
+        BIO_dump_indent_fp( log , Kb.key, sizeof(Kb.key), 4);
     }
     fprintf( log , "\n" );
-	// BIO_dump the IV indented 4 spaces to the righ
-    BIO_dump_indent( log , Kb.iv, INITVECTOR_LEN, 4);
+	// BIO_dump_fp the IV indented 4 spaces to the righ
+    BIO_dump_indent_fp( log , Kb.iv, INITVECTOR_LEN, 4);
     // Get Basim's pre-created Nonces: Nb
 	Nonce_t   Nb;  
 
 	// Use getNonce4Basim () to get Basim's 1st and only nonce into Nb
     getNonce4Basim(1, Nb);
     fprintf( log , "Basim will use this Nonce:  Nb\n"  ) ;
-	// BIO_dump Nb indented 4 spaces to the right
-    BIO_dump_indent( log , Nb, NONCELEN, 4);
+	// BIO_dump_fp Nb indented 4 spaces to the right
+    BIO_dump_indent_fp( log , Nb, NONCELEN, 4);
     fprintf( log , "\n" );
 
     fflush( log ) ;
