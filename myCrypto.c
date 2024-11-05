@@ -371,7 +371,6 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
     p = *msg1;
     
     // use the pointer p to traverse through msg1 and fill the successive parts of the msg
-    
     memcpy(p, &LenA, LENSIZE);
     p += LENSIZE;
 
@@ -388,7 +387,7 @@ unsigned MSG1_new ( FILE *log , uint8_t **msg1 , const char *IDa , const char *I
 
     fprintf( log , "The following new MSG1 ( %lu bytes ) has been created by MSG1_new ():\n" , LenMsg1 ) ;
     // BIO_dumpt the completed MSG1 indented 4 spaces to the right
-    BIO_dump_indent_fp( log , msg1, LenMsg1, 4);
+    BIO_dump_indent_fp( log , *msg1, LenMsg1, 4);
     fprintf( log , "\n" ) ;
     
     return LenMsg1 ;
