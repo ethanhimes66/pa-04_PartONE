@@ -132,7 +132,7 @@ int main ( int argc , char * argv[] )
     write(fd_A2K, msg1, LenMsg1);
 
     fprintf( log , "Amal sent message 1 ( %lu bytes ) to the KDC with:\n    "
-                   "IDa ='v%s'\n    "
+                   "IDa ='%s'\n    "
                    "IDb = '%s'\n" , LenMsg1 , IDa , IDb ) ;
     fprintf( log , "    Na ( %lu Bytes ) is:\n" , NONCELEN ) ;
     // BIO_dump_fp the nonce Na
