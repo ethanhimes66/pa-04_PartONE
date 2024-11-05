@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------
 PA-04:  Part One Intro to Enhanced Needham-Schroeder Key-Exchange with TWO-way Authentication
 
-FILE:   amal.c     SKELETON
+FILE:   amal.c
 
 Written By: 
      1- James Handlon
@@ -47,7 +47,7 @@ int main ( int argc , char * argv[] )
     int      fd_A2K , fd_K2A , fd_A2B , fd_B2A  ;
     FILE    *log ;
 
-    char *developerName = "Code by STUDENTS_LAST_NAMES" ;
+    char *developerName = "Code by Handlon, Himes" ;
 
     fprintf( stdout , "Starting Amal's      %s.\n" , developerName  ) ;
     
@@ -57,10 +57,10 @@ int main ( int argc , char * argv[] )
                "<getFr. Basim> <sendTo Basim>\n\n" , argv[0]) ;
         exit(-1) ;
     }
-    fd_K2A    = atoi ( argv[0] ) ;  // Read from KDC    File Descriptor
-    fd_A2K    = atoi ( argv[1] ) ;  // Send to   KDC    File Descriptor
-    fd_B2A    = atoi ( argv[2] ) ;  // Read from Basim  File Descriptor
-    fd_A2B    = atoi ( argv[3] ) ;  // Send to   Basim  File Descriptor
+    fd_K2A    = atoi ( argv[1] ) ;  // Read from KDC    File Descriptor
+    fd_A2K    = atoi ( argv[2] ) ;  // Send to   KDC    File Descriptor
+    fd_B2A    = atoi ( argv[3] ) ;  // Read from Basim  File Descriptor
+    fd_A2B    = atoi ( argv[4] ) ;  // Send to   Basim  File Descriptor
 
     log = fopen("amal/logAmal.txt" , "w" );
     if( ! log )
@@ -91,7 +91,7 @@ int main ( int argc , char * argv[] )
         fprintf( stderr , "\nCould not get Amal's Masker key & IV.\n");
         exit(-1);
     } else {
-        fprintf( log , "Amal has this Master Ka { %hhn , %hhn }\n", Ka.key, Ka.iv);
+        fprintf( log , "Amal has this Master Ka { key , IV }\n");
     }
 
 	// BIO_dump_fp the Key IV indented 4 spaces to the righ
@@ -131,8 +131,8 @@ int main ( int argc , char * argv[] )
     // Send MSG1 to KDC via the appropriate pipe
     write(fd_A2K, msg1, LenMsg1);
 
-   fprintf( log , "Amal sent message 1 ( %lu bytes ) to the KDC with:\n    "
-                   "IDa ='%s'\n    "
+    fprintf( log , "Amal sent message 1 ( %lu bytes ) to the KDC with:\n    "
+                   "IDa ='v%s'\n    "
                    "IDb = '%s'\n" , LenMsg1 , IDa , IDb ) ;
     fprintf( log , "    Na ( %lu Bytes ) is:\n" , NONCELEN ) ;
     // BIO_dump_fp the nonce Na

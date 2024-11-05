@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------
 PA-04:  Part One Intro to Enhanced Needham-Schroeder Key-Exchange with TWO-way Authentication
 
-FILE:   basim.c     SKELETON
+FILE:   basim.c
 
 Written By: 
      1- James Handlon
@@ -43,7 +43,7 @@ int main ( int argc , char * argv[] )
     int       fd_A2B , fd_B2A   ;
     FILE     *log ;
 
-    char *developerName = "Code by STUDENTS_LAST_NAMES" ;
+    char *developerName = "Code by Handlon, Himes" ;
 
     fprintf( stdout , "Starting Basim's     %s\n" , developerName ) ;
 
@@ -84,7 +84,7 @@ int main ( int argc , char * argv[] )
         fprintf( stderr , "\nCould not get Basim's Masker key & IV.\n");
         exit(-1);
     } else {
-        fprintf( log , "Basim has this Master Ka { %hhn , %hhn }\n", Kb.key, Kb.iv);
+        fprintf( log , "Basim has this Master Ka { key , IV }\n");
         BIO_dump_indent_fp( log , Kb.key, sizeof(Kb.key), 4);
     }
     fprintf( log , "\n" );

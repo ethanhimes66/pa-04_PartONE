@@ -1,10 +1,11 @@
 /*----------------------------------------------------------------------------
 pa-04_PartOne:  Intro to Enhanced Needham-Schroeder Key-Exchange with TWO-way Authentication
 
-FILE:   kdc.c    SKELETON
+FILE:   kdc.c
 
 Written By: 
-     1- Dr. Mohamed Aboutabl
+     1- James Handlon
+     2- Ethan Himes
 Submitted on: 
 ----------------------------------------------------------------------------*/
 
@@ -22,7 +23,7 @@ int main ( int argc , char * argv[] )
     int       fd_A2K , fd_K2A   ;
     FILE     *log ;
     
-    char *developerName = "Code by STUDENTS_LAST_NAMES" ;
+    char *developerName = "Code by Handlon, Himes" ;
 
     fprintf( stdout , "Starting the KDC's   %s\n"  , developerName ) ;
 
@@ -63,7 +64,7 @@ int main ( int argc , char * argv[] )
         fprintf( stderr , "\nCould not get Amal's Masker key & IV.\n");
         exit(-1);
     } else {
-        fprintf( log , "Amal has this Master Ka { %hhn , %hhn }\n", Ka.key, Ka.iv);
+        fprintf( log , "Amal has this Master Ka { key , IV }\n");
         BIO_dump_indent_fp( log , Ka.key, sizeof(Ka.key), 4);
     }
     fprintf( log , "\n" );
@@ -86,7 +87,7 @@ int main ( int argc , char * argv[] )
         fprintf( stderr , "\nCould not get Basim's Masker key & IV.\n");
         exit(-1);
     } else {
-        fprintf( log , "Basim has this Master Ka { %hhn , %hhn }\n", Kb.key, Kb.iv);
+        fprintf( log , "Basim has this Master Ka { key , IV }\n");
         BIO_dump_indent_fp( log , Kb.key, sizeof(Kb.key), 4);
     }
     fprintf( log , "\n" );
